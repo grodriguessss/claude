@@ -53,8 +53,7 @@ Azul clínico. Depoimento inventado. Número de vaidade sem fonte. Vídeo de pro
 
 ## Para substituir antes de publicar
 
-- `assets/depois.webp` no hero: trocar pela foto do casal (vertical 4:5).
-- `.person__photo` em Nós: fotos individuais 3:4 (hoje mostram o monograma).
+- Fotos reais estão em resolução de print: pedir originais.
 - Antes e depois: trocar por caso real, com autorização do paciente e dentro das regras do CFO.
 - Tratamentos listados foram assumidos a partir da bio. Validar com eles.
 - Endereço da clínica em São Carlos.
@@ -69,26 +68,35 @@ Azul clínico. Depoimento inventado. Número de vaidade sem fonte. Vídeo de pro
 | "Mostramos opções e valores antes" como processo | reescrever passo 03 e o ticket |
 | Pagamento: nada prometido (sem Pix, sem parcelamento) | se tiver parcelamento, entra no ticket, perto do CTA |
 
-## Movimento (rodada 3)
+## Movimento (rodada 4)
 
-- Hero: título entra linha a linha por máscara (1.2s, stagger 110ms), foto revela de baixo para cima.
-- Faixa de tratamentos com pílulas de imagem, 48s por volta, pausa no hover.
-- Frase "Adiar o simples" acende palavra por palavra no scroll.
-- Tratamentos: palco fixo em arco que troca de foto por revelação conforme o item ativo; no mobile cada item tem foto própria.
-- Dicionário virou tradutor em formato de stories: jargão aparece, é riscado, a tradução entra palavra por palavra. Avança sozinho a cada 7.5s só quando visível, pausa no hover e para quando a pessoa escolhe um termo.
-- Linhas do passo a passo se desenham; parallax leve no modelo 3D, na sala e na escova.
+- Hero: título entra linha a linha por máscara; foto do casal revela de baixo para cima.
+- Tratamentos: palco fixo em arco que troca de foto conforme o item ativo; no mobile cada item tem foto própria.
+- Sinais: anel fino em volta do problema (sem cobrir), número fora ligado por linha, lupa no card com o problema ampliado.
+- Dicionário: página de dicionário em papel, índice com pontilhado e página, verbete com "como o dentista fala" riscado e "como a gente fala". Avança sozinho a cada 7.5s só quando visível; para quando a pessoa escolhe um termo.
+- Como funciona: foto real do consultório fixa, linha do tempo vertical que se preenche no scroll, CTA no fim.
+- Removidos a pedido: faixa rolante, frase acendendo no scroll, rótulos de canto do hero, seção "Verdades... em um café".
+- Revelação de foto recorta a imagem, nunca a moldura: moldura recortada não dispara o IntersectionObserver.
 - Tudo desliga com prefers-reduced-motion. JavaScript puro, sem biblioteca.
+
+## Fotos reais (Instagram, via Figma)
+
+| Arquivo | Onde | Tratamento |
+|---|---|---|
+| casal.webp | hero | texto do post e seta do carrossel removidos por inpaint |
+| jaleco.webp | Nós | texto do topo e nomes do rodapé removidos, pontos do carrossel cortados |
+| cirurgia.webp | tratamento Implantes | recorte da metade de cima, azul clínico dessaturado e aquecido |
+| espelho.webp | Como funciona | recorte da metade de cima |
+
+São capturas de tela: resolução baixa (até 1116px). Pedir os arquivos originais antes de publicar de verdade.
 
 ## Créditos de imagem (Unsplash, licença livre)
 
 | Arquivo | Origem |
 |---|---|
 | t-lentes.webp | https://unsplash.com/photos/photo-1660300110546-3b39e353b672 |
-| t-implantes.webp | https://unsplash.com/photos/photo-1660300110556-fa3ccf6f4eb1 |
 | t-clareamento.webp | https://unsplash.com/photos/photo-1654373535457-383a0a4d00f9 |
 | t-resina.webp | https://unsplash.com/photos/photo-1690167687106-180b0ea1d813 |
 | t-limpeza.webp | https://unsplash.com/photos/photo-1617984161716-189c889bd474 |
-| escova.webp | https://unsplash.com/photos/photo-1634068966402-86a27b9d57c1 |
-| sala.webp | https://unsplash.com/photos/photo-1759262151080-e05ba1c6294f |
 
-As demais imagens vêm do template Dentel (referência de prospecção). Trocar por fotos próprias da clínica antes de publicar de verdade.
+As demais imagens vêm do template Dentel (referência de prospecção).

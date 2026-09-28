@@ -86,13 +86,13 @@
   setTimeout(splitHero, 2500);
 
   /* ---------- revelação com failsafe ---------- */
-  const reveals = document.querySelectorAll(".reveal, .img-reveal, .step");
+  const reveals = document.querySelectorAll(".reveal, .img-reveal");
   if (reduce || !("IntersectionObserver" in window)) {
     doc.classList.add("reveal-failsafe");
     reveals.forEach((el) => el.classList.add("is-in"));
   } else {
     document.querySelectorAll("section, footer").forEach((s) => {
-      s.querySelectorAll(".reveal, .step").forEach((el, i) => el.style.setProperty("--d", `${Math.min(i, 6) * 80}ms`));
+      s.querySelectorAll(".reveal").forEach((el, i) => el.style.setProperty("--d", `${Math.min(i, 6) * 80}ms`));
     });
     const io = new IntersectionObserver((entries) => {
       entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("is-in"); io.unobserve(e.target); } });
@@ -102,31 +102,27 @@
     setTimeout(() => reveals.forEach((el) => { if (el.getBoundingClientRect().top < window.innerHeight) el.classList.add("is-in"); }), 2500);
   }
 
-  /* ---------- frase que acende no scroll + parallax ---------- */
-  const lit = document.querySelector("[data-lit]");
-  let litUnits = [];
-  if (lit) {
-    splitWords(lit);
-    litUnits = [...lit.querySelectorAll(".w, .pill-img")];
-    if (reduce) litUnits.forEach((u) => u.classList.add("on"));
-  }
+  /* ---------- parallax leve + linha do tempo ---------- */
   const px = reduce ? [] : [...document.querySelectorAll("[data-parallax]")];
+  const tl = document.querySelector("[data-tl]");
+  const tlSteps = tl ? [...tl.querySelectorAll(".tl__step")] : [];
   let ticking = false;
   const onFrame = () => {
     ticking = false;
     const vh = window.innerHeight;
-    if (lit && !reduce) {
-      const r = lit.getBoundingClientRect();
-      const p = Math.min(Math.max((vh * 0.85 - r.top) / (r.height + vh * 0.35), 0), 1);
-      const n = Math.round(p * litUnits.length);
-      litUnits.forEach((u, i) => u.classList.toggle("on", i < n));
-    }
     px.forEach((el) => {
       const r = el.getBoundingClientRect();
       if (r.bottom < 0 || r.top > vh) return;
       const off = (r.top + r.height / 2 - vh / 2) * parseFloat(el.dataset.parallax);
       el.style.transform = `translate3d(0, ${off.toFixed(1)}px, 0)`;
     });
+    if (tl) {
+      const r = tl.getBoundingClientRect();
+      const mark = vh * 0.6;
+      const fill = reduce ? 1 : Math.min(Math.max((mark - r.top) / r.height, 0), 1);
+      tl.style.setProperty("--fill", fill.toFixed(3));
+      tlSteps.forEach((st) => st.classList.toggle("is-on", reduce || st.getBoundingClientRect().top + 12 < mark));
+    }
   };
   const requestFrame = () => { if (!ticking) { ticking = true; requestAnimationFrame(onFrame); } };
   window.addEventListener("scroll", requestFrame, { passive: true });
@@ -168,41 +164,55 @@
   const signBtns = document.querySelectorAll("[data-sign]");
   const sTitle = document.querySelector("[data-sign-title]");
   const sBody = document.querySelector("[data-sign-body]");
+  const zoom = document.querySelector("[data-zoom]");
+  const spot = (i) => {
+    const h = document.querySelector(`.hotspot[data-sign="${i}"]`);
+    return h ? [parseFloat(h.style.getPropertyValue("--x")) / 100, parseFloat(h.style.getPropertyValue("--y")) / 100] : [0.5, 0.5];
+  };
   const setSign = (i) => {
     signBtns.forEach((b) => b.classList.toggle("is-active", b.dataset.sign === String(i)));
     sTitle.textContent = signs[i].t;
     sBody.textContent = signs[i].b;
+    if (zoom) {
+      // centraliza o ponto do problema dentro da lupa (fundo em 520%)
+      const z = 5.2, [fx, fy] = spot(i);
+      const pos = (f) => `${(((0.5 - f * z) / (1 - z)) * 100).toFixed(2)}%`;
+      zoom.style.backgroundPosition = `${pos(fx)} ${pos(fy)}`;
+    }
   };
   signBtns.forEach((b) => b.addEventListener("click", () => setSign(+b.dataset.sign)));
+  setSign(0);
 
   /* ---------- tradutor: dentista diz → a gente traduz ---------- */
   const dict = [
-    ["Lente de contato dental",
-     "Indicamos laminados cerâmicos ultrafinos, com preparo minimamente invasivo.",
-     "Uma lâmina muito fina de porcelana colada na frente do dente. Muda cor e formato quase sem desgastar o que é seu."],
-    ["Faceta",
-     "Vamos fazer facetas em resina composta ou cerâmica, com leve redução de esmalte.",
-     "Parecida com a lente, só que um pouco mais espessa. Entra quando o dente precisa de mais correção de cor ou de forma."],
-    ["Implante",
-     "Será instalado um implante osseointegrável de titânio, com coroa protética sobre implante.",
-     "Um pino de titânio que faz o papel da raiz. Em cima dele vai a coroa, que é a parte que aparece quando você sorri."],
-    ["Carga imediata",
+    ["Carga imediata", "subst. fem. · implantodontia",
      "O caso permite carga imediata, com instalação do provisório na mesma sessão cirúrgica.",
      "O dente provisório entra logo depois do implante, sem você ficar dias sem dente. Depende de cada caso."],
-    ["Enxerto ósseo",
+    ["Enxerto ósseo", "subst. masc. · cirurgia",
      "Há reabsorção do rebordo alveolar. Precisamos de enxerto ósseo antes do implante.",
      "Um reforço no osso quando ele não tem volume suficiente para segurar o implante com firmeza."],
-    ["Tártaro",
-     "Observa-se presença de cálculo dentário supragengival na região anteroinferior.",
-     "Placa bacteriana que endureceu atrás dos dentes de baixo. A escova não tira mais. Só sai na limpeza do consultório."],
-    ["Gengivoplastia",
+    ["Faceta", "subst. fem. · estética",
+     "Vamos fazer facetas em resina composta ou cerâmica, com leve redução de esmalte.",
+     "Parecida com a lente, só que um pouco mais espessa. Entra quando o dente precisa de mais correção de cor ou de forma."],
+    ["Gengivoplastia", "subst. fem. · periodontia",
      "Para o sorriso gengival, indico gengivoplastia com recontorno do zênite.",
      "Um ajuste no contorno da gengiva, para o sorriso mostrar mais dente e menos gengiva."],
+    ["Implante", "subst. masc. · implantodontia",
+     "Será instalado um implante osseointegrável de titânio, com coroa protética sobre implante.",
+     "Um pino de titânio que faz o papel da raiz. Em cima dele vai a coroa, que é a parte que aparece quando você sorri."],
+    ["Lente de contato dental", "subst. fem. · estética",
+     "Indicamos laminados cerâmicos ultrafinos, com preparo minimamente invasivo.",
+     "Uma lâmina muito fina de porcelana colada na frente do dente. Muda cor e formato quase sem desgastar o que é seu."],
+    ["Tártaro", "subst. masc. · prevenção",
+     "Observa-se presença de cálculo dentário supragengival na região anteroinferior.",
+     "Placa bacteriana que endureceu atrás dos dentes de baixo. A escova não tira mais. Só sai na limpeza do consultório."],
   ];
   const trRoot = document.querySelector("[data-tr]");
   if (trRoot) {
     const chips = [...trRoot.querySelectorAll("[data-term]")];
-    const stage = trRoot.querySelector(".tr__stage");
+    const stage = trRoot.querySelector(".book__page");
+    const metaEl = trRoot.querySelector("[data-tr-meta]");
+    const folio = trRoot.querySelector("[data-tr-folio]");
     const jEl = trRoot.querySelector("[data-tr-jargon]");
     const wEl = trRoot.querySelector("[data-tr-word]");
     const mEl = trRoot.querySelector("[data-tr-meaning]");
@@ -219,20 +229,19 @@
         c.classList.toggle("is-active", on); c.setAttribute("aria-selected", on); c.tabIndex = on ? 0 : -1;
         c.style.setProperty("--p", on && !auto ? 1 : 0);
       });
-      const [word, said, plain] = dict[i];
+      const [word, meta, said, plain] = dict[i];
+      metaEl.textContent = meta;
+      folio.textContent = `p. ${String(i + 1).padStart(2, "0")}`;
       jEl.innerHTML = `“<span class="strike">${said}</span>”`;
       mEl.textContent = plain;
       wEl.textContent = word;
       ask.href = waUrl(`${base} e fiquei com uma dúvida sobre ${word.toLowerCase()}.`);
-      if (reduce) { jEl.classList.add("is-in", "is-struck"); mEl.classList.add("is-in"); stage.classList.add("is-turned"); return; }
+      if (reduce) { jEl.classList.add("is-in", "is-struck"); mEl.classList.add("is-in"); return; }
       splitWords(jEl.querySelector(".strike")); splitWords(mEl);
       [jEl, mEl].forEach((el) => el.classList.remove("is-in", "is-struck"));
-      stage.classList.remove("is-turned");
-      wEl.style.opacity = 0;
       timers.push(setTimeout(() => jEl.classList.add("is-in"), 60));
-      timers.push(setTimeout(() => jEl.classList.add("is-struck"), 1500));
-      timers.push(setTimeout(() => stage.classList.add("is-turned"), 2100));
-      timers.push(setTimeout(() => { wEl.style.transition = "opacity 600ms"; wEl.style.opacity = 1; mEl.classList.add("is-in"); }, 2500));
+      timers.push(setTimeout(() => jEl.classList.add("is-struck"), 1400));
+      timers.push(setTimeout(() => mEl.classList.add("is-in"), 2100));
     };
     const tick = (now) => {
       raf = null;
@@ -245,7 +254,7 @@
     };
     const stopAuto = () => { auto = false; chips.forEach((c, k) => c.style.setProperty("--p", k === cur ? 1 : 0)); };
     chips.forEach((c) => {
-      c.addEventListener("click", () => { stopAuto(); play(+c.dataset.term); c.scrollIntoView({ block: "nearest", inline: "center", behavior: "smooth" }); });
+      c.addEventListener("click", () => { stopAuto(); play(+c.dataset.term); if (window.innerWidth < 900) c.scrollIntoView({ block: "nearest", inline: "center", behavior: "smooth" }); });
       c.addEventListener("keydown", (e) => {
         if (!["ArrowRight", "ArrowLeft"].includes(e.key)) return;
         e.preventDefault(); stopAuto();
