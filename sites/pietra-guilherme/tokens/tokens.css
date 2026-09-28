@@ -65,7 +65,7 @@
   --text-lg: clamp(1.125rem, 1.05rem + 0.35vw, 1.3125rem);     /* 18 a 21 lead, pergunta, subtítulo */
   --text-xl: clamp(1.625rem, 1.3rem + 1.2vw, 2.25rem);         /* 26 a 36 título de item */
   --text-2xl: clamp(2.25rem, 1.5rem + 3vw, 3.75rem);           /* 36 a 60 h2 */
-  --text-3xl: clamp(2.875rem, 1.2rem + 5.6vw, 6rem);           /* 46 a 96 h1 */
+  --text-3xl: clamp(2.875rem, 1.2rem + min(5.6vw, 8.5vh), 6rem); /* 46 a 96 h1, também limitado pela altura da tela */
 
   --leading-tight: 1.02;
   --leading-snug: 1.15;

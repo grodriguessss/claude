@@ -170,6 +170,7 @@
   const txFrames = [...document.querySelectorAll("[data-frame]")];
   const txCount = document.querySelector("[data-tx-count]");
   const txCap = document.querySelector("[data-tx-caption]");
+  const txStage = document.querySelector(".tx__stage");
   let txActive = -1;
   const setTx = (i) => {
     if (i === txActive) return;
@@ -179,9 +180,18 @@
       if (k !== i && k !== txActive) f.classList.remove("was-on");
     });
     txItems.forEach((it, k) => it.classList.toggle("is-active", k === i));
+    const first = txActive === -1;
     txActive = i;
-    if (txCount) txCount.textContent = String(i + 1).padStart(2, "0");
-    if (txCap) txCap.textContent = txItems[i].querySelector(".tx__title").textContent;
+    const label = () => {
+      if (txCount) txCount.textContent = String(i + 1).padStart(2, "0");
+      if (txCap) txCap.textContent = txItems[i].querySelector(".tx__title").textContent;
+      if (txStage) txStage.classList.remove("is-swapping");
+    };
+    if (first || reduce || !txStage) { label(); return; }
+    // contador e nome saem, trocam e voltam, em vez de pular
+    txStage.classList.add("is-swapping");
+    clearTimeout(setTx.t);
+    setTx.t = setTimeout(label, 400);
   };
   if (txItems.length && "IntersectionObserver" in window) {
     const txIo = new IntersectionObserver((entries) => {
