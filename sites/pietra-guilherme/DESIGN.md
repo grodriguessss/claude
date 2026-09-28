@@ -104,3 +104,20 @@ Lenis 1.1.20 via jsDelivr, lerp 0.1, só com ponteiro fino (mouse). Desligado no
 | t-limpeza.webp | https://unsplash.com/photos/photo-1617984161716-189c889bd474 |
 
 As demais imagens vêm do template Dentel (referência de prospecção).
+
+## Performance (Lighthouse mobile, 4G simulado)
+
+| | Antes | Depois |
+|---|---|---|
+| Nota | 73 | 94 a 95 |
+| FCP | 3.1 s | 1.6 a 1.8 s |
+| LCP | 4.9 s | 2.4 a 2.5 s |
+| CLS | 0 | 0 |
+| Peso total | 633 KB | 214 KB |
+
+Como manter:
+- Imagem nova: salvar o original em `assets/`, rodar `python3 tools/otimizar_imagens.py` (gera AVIF + WebP em 240/480/720/1100 em `assets/r/`) e usar `<picture>` com `srcset` e `sizes`, como as outras.
+- CSS: editar os arquivos em `tokens/` e `styles/` e rodar `python3 tools/build_css.py`. A página carrega só `styles/site.min.css`.
+- Fontes hospedadas em `fonts/` (subset latino). Hanken Grotesk é variável: um arquivo para 400 a 600.
+- No celular: sem grão, sem Lenis (o script nem é baixado), texto do hero sem animação de entrada, fotos do hero pré-carregadas.
+- Cache: fontes 1 ano, imagens 30 dias, CSS/JS 1 dia (`vercel.json`).
