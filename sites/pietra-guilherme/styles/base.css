@@ -69,14 +69,18 @@ h1, h2, h3 { text-wrap: balance; }
 /* matéria: grão de papel sobre a página inteira */
 body::after {
   content: ""; position: fixed; inset: 0; z-index: 90; pointer-events: none;
-  background-image: url("../assets/grain.png"); background-size: 240px;
+  background-image: url("../assets/grain.png"); background-size: 160px;
   opacity: .22; mix-blend-mode: multiply;
 }
+/* no celular o grão sai: camada fixa com blend repinta a cada scroll e custa bateria */
+@media (max-width: 900px) { body::after { display: none; } }
 
 /* revelação por scroll */
 .reveal { opacity: 0; transform: translateY(var(--reveal-distance)); transition: opacity var(--dur-reveal) var(--ease-out), transform var(--dur-reveal) var(--ease-out); transition-delay: var(--d, 0ms); }
 .reveal.is-in { opacity: 1; transform: none; }
 .no-js .reveal, .reveal-failsafe .reveal { opacity: 1; transform: none; }
+/* sem animação de entrada (celular ou reduced-motion): o hero pinta na hora, que é o que conta para o LCP */
+html:not(.anim) .hero .reveal { opacity: 1; transform: none; transition: none; }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }

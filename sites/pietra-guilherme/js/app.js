@@ -45,7 +45,8 @@
   const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   /* ---------- smooth scroll: só com mouse, nunca no toque nem com reduced-motion ---------- */
-  if (!reduce && window.Lenis && window.matchMedia("(pointer: fine)").matches) {
+  // o script só é baixado aqui: celular e reduced-motion nunca pagam por ele
+  const startLenis = () => {
     const lenis = new window.Lenis({ lerp: 0.1, wheelMultiplier: 1, smoothWheel: true });
     const loop = (t) => { lenis.raf(t); requestAnimationFrame(loop); };
     requestAnimationFrame(loop);
@@ -59,6 +60,13 @@
         lenis.scrollTo(target, { offset: -88, duration: 1.4 });
       });
     });
+  };
+  if (!reduce && window.matchMedia("(pointer: fine)").matches) {
+    const tag = document.createElement("script");
+    tag.src = "https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.min.js";
+    tag.async = true;
+    tag.onload = () => window.Lenis && startLenis();
+    document.head.appendChild(tag);
   }
   const splitWords = (el, cls = "w") => {
     let i = 0;
@@ -81,10 +89,11 @@
     return i;
   };
 
-  // hero: título linha a linha, depois da fonte carregar
+  // hero: título linha a linha, depois da fonte carregar (só desktop; no celular o texto pinta direto)
+  const animOn = doc.classList.contains("anim");
   const splitHero = () => document.querySelectorAll("[data-split]:not(.is-split)").forEach((h) => {
     h.classList.add("is-split");
-    if (reduce) return;
+    if (reduce || !animOn) return;
     splitWords(h, "sw");
     const words = [...h.querySelectorAll(".sw")];
     const lines = [];
@@ -101,6 +110,16 @@
   });
   (document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve()).then(splitHero);
   setTimeout(splitHero, 2500);
+
+  /* ---------- hero: fundo e recorte aparecem juntos ---------- */
+  document.querySelectorAll("[data-pop]").forEach((pop) => {
+    const show = () => pop.classList.add("is-ready");
+    const imgs = [...pop.querySelectorAll("img")].map((im) =>
+      im.decode ? im.decode().catch(() => {}) : new Promise((r) => (im.complete ? r() : im.addEventListener("load", r, { once: true })))
+    );
+    Promise.all(imgs).then(show);
+    setTimeout(show, 2500);
+  });
 
   /* ---------- revelação com failsafe ---------- */
   const reveals = document.querySelectorAll(".reveal, .img-reveal");

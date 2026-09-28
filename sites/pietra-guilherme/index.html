@@ -11,17 +11,13 @@
   <meta property="og:url" content="https://pietra-guilherme.vercel.app/">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="theme-color" content="#faf6f0">
-  <script>document.documentElement.classList.add("js")</script>
+  <script>(function(d){var c=d.documentElement.classList;c.add("js");if(matchMedia("(min-width: 901px)").matches&&!matchMedia("(prefers-reduced-motion: reduce)").matches)c.add("anim")})(document)</script>
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600&family=IBM+Plex+Mono:wght@400&family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet">
-
-  <link rel="stylesheet" href="tokens/tokens.css">
-  <link rel="stylesheet" href="styles/base.css">
-  <link rel="stylesheet" href="styles/components.css">
-  <link rel="stylesheet" href="styles/app.css">
+  <link rel="preload" href="fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/playfair-display-normal-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" as="image" type="image/avif" media="(min-width: 901px)" imagesrcset="assets/r/hero-fundo-720.avif 720w, assets/r/hero-fundo-1100.avif 1100w" imagesizes="540px" fetchpriority="high">
+  <link rel="stylesheet" href="styles/site.min.css">
 </head>
 <body>
   <a class="skip" href="#conteudo">Pular para o conteúdo</a>
@@ -71,9 +67,9 @@
         </div>
 
         <figure class="hero__visual reveal">
-          <div class="pop">
-            <div class="arch img-reveal"><img src="assets/hero-fundo.webp" alt="Dr. Guilherme sentado e Dra. Pietra em pé ao lado, de jaleco, no consultório" width="1100" height="1322" fetchpriority="high"></div>
-            <img class="pop__cut" src="assets/hero-recorte.webp" alt="" aria-hidden="true" width="1049" height="1388" fetchpriority="high">
+          <div class="pop" data-pop>
+            <div class="arch"><picture><source type="image/avif" srcset="assets/r/hero-fundo-240.avif 240w, assets/r/hero-fundo-480.avif 480w, assets/r/hero-fundo-720.avif 720w, assets/r/hero-fundo-1100.avif 1100w" sizes="(max-width: 900px) 92vw, 540px"><img decoding="async" src="assets/r/hero-fundo-1100.webp" srcset="assets/r/hero-fundo-240.webp 240w, assets/r/hero-fundo-480.webp 480w, assets/r/hero-fundo-720.webp 720w, assets/r/hero-fundo-1100.webp 1100w" sizes="(max-width: 900px) 92vw, 540px" alt="Dr. Guilherme sentado e Dra. Pietra em pé ao lado, de jaleco, no consultório" width="1100" height="1322" fetchpriority="high"></picture></div>
+            <picture><source type="image/avif" srcset="assets/r/hero-recorte-240.avif 240w, assets/r/hero-recorte-480.avif 480w, assets/r/hero-recorte-720.avif 720w" sizes="(max-width: 900px) 92vw, 540px"><img decoding="async" class="pop__cut" src="assets/r/hero-recorte-720.webp" srcset="assets/r/hero-recorte-240.webp 240w, assets/r/hero-recorte-480.webp 480w, assets/r/hero-recorte-720.webp 720w" sizes="(max-width: 900px) 92vw, 540px" alt="" aria-hidden="true" width="1049" height="1388" fetchpriority="high"></picture>
           </div>
           <div class="hero__card">
             <span class="hero__card-mono" aria-hidden="true"><i>P</i><i>G</i></span>
@@ -91,9 +87,9 @@
       <div class="wrap">
         <p class="manifest__line reveal">
           Adiar o
-          <span class="pill-img"><img src="assets/sorriso-detalhe.webp" alt="" width="1600" height="989" loading="lazy"></span>
+          <span class="pill-img"><picture><source type="image/avif" srcset="assets/r/sorriso-detalhe-240.avif 240w, assets/r/sorriso-detalhe-480.avif 480w, assets/r/sorriso-detalhe-720.avif 720w, assets/r/sorriso-detalhe-1100.avif 1100w" sizes="120px"><img decoding="async" src="assets/r/sorriso-detalhe-1100.webp" srcset="assets/r/sorriso-detalhe-240.webp 240w, assets/r/sorriso-detalhe-480.webp 480w, assets/r/sorriso-detalhe-720.webp 720w, assets/r/sorriso-detalhe-1100.webp 1100w" sizes="120px" alt="" width="1600" height="989" loading="lazy"></picture></span>
           <em>simples</em> pode tornar o tratamento
-          <span class="pill-img pill-img--round"><img src="assets/implante.webp" alt="" width="1600" height="1067" loading="lazy"></span>
+          <span class="pill-img pill-img--round"><picture><source type="image/avif" srcset="assets/r/implante-240.avif 240w, assets/r/implante-480.avif 480w, assets/r/implante-720.avif 720w, assets/r/implante-1100.avif 1100w" sizes="120px"><img decoding="async" src="assets/r/implante-1100.webp" srcset="assets/r/implante-240.webp 240w, assets/r/implante-480.webp 480w, assets/r/implante-720.webp 720w, assets/r/implante-1100.webp 1100w" sizes="120px" alt="" width="1600" height="1067" loading="lazy"></picture></span>
           <em>mais complexo.</em>
         </p>
         <p class="manifest__sub reveal">Uma cárie pequena se resolve com uma restauração em uma consulta. Adiada, pode chegar ao canal. Quanto antes a gente conversa, mais simples fica o caminho.</p>
@@ -117,7 +113,7 @@
         </div>
 
         <figure class="us__photo">
-          <div class="us__frame img-reveal"><img src="assets/jardim.webp" alt="Dra. Pietra e Dr. Guilherme abraçados em frente a um jardim" loading="lazy" width="1200" height="1345"></div>
+          <div class="us__frame img-reveal"><picture><source type="image/avif" srcset="assets/r/jardim-240.avif 240w, assets/r/jardim-480.avif 480w, assets/r/jardim-720.avif 720w, assets/r/jardim-1100.avif 1100w" sizes="(max-width: 900px) 92vw, 540px"><img decoding="async" src="assets/r/jardim-1100.webp" srcset="assets/r/jardim-240.webp 240w, assets/r/jardim-480.webp 480w, assets/r/jardim-720.webp 720w, assets/r/jardim-1100.webp 1100w" sizes="(max-width: 900px) 92vw, 540px" alt="Dra. Pietra e Dr. Guilherme abraçados em frente a um jardim" loading="lazy" width="1200" height="1345"></picture></div>
           <figcaption class="us__names">
             <span><b>Dra.&nbsp;Pietra Michelin</b>CROSP 174593</span>
             <span><b>Dr.&nbsp;Guilherme Mattos</b>CROSP 161438</span>
@@ -138,18 +134,18 @@
         <div class="tx__grid">
           <div class="tx__stage" aria-hidden="true">
             <div class="tx__arch">
-            <img class="tx__frame is-on" src="assets/t-lentes.webp" alt="Lentes e facetas" loading="lazy" width="1400" height="1400" data-frame="0">
-            <img class="tx__frame" src="assets/cirurgia.webp" alt="Dr. Guilherme em procedimento de implante" loading="lazy" width="1400" height="1400" data-frame="1">
-            <img class="tx__frame" src="assets/t-clareamento.webp" alt="Clareamento" loading="lazy" width="1400" height="1400" data-frame="2">
-            <img class="tx__frame" src="assets/t-resina.webp" alt="Restaurações em resina" loading="lazy" width="1400" height="1400" data-frame="3">
-            <img class="tx__frame" src="assets/t-limpeza.webp" alt="Limpeza e prevenção" loading="lazy" width="1400" height="1400" data-frame="4">
+            <picture><source type="image/avif" srcset="assets/r/t-lentes-240.avif 240w, assets/r/t-lentes-480.avif 480w, assets/r/t-lentes-720.avif 720w, assets/r/t-lentes-1100.avif 1100w" sizes="(max-width: 900px) 1px, 540px"><img decoding="async" class="tx__frame is-on" src="assets/r/t-lentes-1100.webp" srcset="assets/r/t-lentes-240.webp 240w, assets/r/t-lentes-480.webp 480w, assets/r/t-lentes-720.webp 720w, assets/r/t-lentes-1100.webp 1100w" sizes="(max-width: 900px) 1px, 540px" alt="Lentes e facetas" loading="lazy" width="1400" height="1400" data-frame="0"></picture>
+            <picture><source type="image/avif" srcset="assets/r/cirurgia-240.avif 240w, assets/r/cirurgia-480.avif 480w, assets/r/cirurgia-720.avif 720w" sizes="(max-width: 900px) 1px, 540px"><img decoding="async" class="tx__frame" src="assets/r/cirurgia-720.webp" srcset="assets/r/cirurgia-240.webp 240w, assets/r/cirurgia-480.webp 480w, assets/r/cirurgia-720.webp 720w" sizes="(max-width: 900px) 1px, 540px" alt="Dr. Guilherme em procedimento de implante" loading="lazy" width="1400" height="1400" data-frame="1"></picture>
+            <picture><source type="image/avif" srcset="assets/r/t-clareamento-240.avif 240w, assets/r/t-clareamento-480.avif 480w, assets/r/t-clareamento-720.avif 720w, assets/r/t-clareamento-1100.avif 1100w" sizes="(max-width: 900px) 1px, 540px"><img decoding="async" class="tx__frame" src="assets/r/t-clareamento-1100.webp" srcset="assets/r/t-clareamento-240.webp 240w, assets/r/t-clareamento-480.webp 480w, assets/r/t-clareamento-720.webp 720w, assets/r/t-clareamento-1100.webp 1100w" sizes="(max-width: 900px) 1px, 540px" alt="Clareamento" loading="lazy" width="1400" height="1400" data-frame="2"></picture>
+            <picture><source type="image/avif" srcset="assets/r/t-resina-240.avif 240w, assets/r/t-resina-480.avif 480w, assets/r/t-resina-720.avif 720w, assets/r/t-resina-1100.avif 1100w" sizes="(max-width: 900px) 1px, 540px"><img decoding="async" class="tx__frame" src="assets/r/t-resina-1100.webp" srcset="assets/r/t-resina-240.webp 240w, assets/r/t-resina-480.webp 480w, assets/r/t-resina-720.webp 720w, assets/r/t-resina-1100.webp 1100w" sizes="(max-width: 900px) 1px, 540px" alt="Restaurações em resina" loading="lazy" width="1400" height="1400" data-frame="3"></picture>
+            <picture><source type="image/avif" srcset="assets/r/t-limpeza-240.avif 240w, assets/r/t-limpeza-480.avif 480w, assets/r/t-limpeza-720.avif 720w, assets/r/t-limpeza-1100.avif 1100w" sizes="(max-width: 900px) 1px, 540px"><img decoding="async" class="tx__frame" src="assets/r/t-limpeza-1100.webp" srcset="assets/r/t-limpeza-240.webp 240w, assets/r/t-limpeza-480.webp 480w, assets/r/t-limpeza-720.webp 720w, assets/r/t-limpeza-1100.webp 1100w" sizes="(max-width: 900px) 1px, 540px" alt="Limpeza e prevenção" loading="lazy" width="1400" height="1400" data-frame="4"></picture>
             </div>
             <p class="tx__count"><span data-tx-count>01</span> / 05</p>
             <p class="tx__caption" data-tx-caption>Lentes e facetas</p>
           </div>
           <ol class="tx__list" data-tx-list>
           <li class="tx__item" data-tx="0">
-            <figure class="tx__thumb"><img src="assets/t-lentes.webp" alt="" loading="lazy" width="1400" height="1400"></figure>
+            <figure class="tx__thumb"><picture><source type="image/avif" srcset="assets/r/t-lentes-240.avif 240w, assets/r/t-lentes-480.avif 480w, assets/r/t-lentes-720.avif 720w, assets/r/t-lentes-1100.avif 1100w" sizes="(max-width: 900px) 92vw, 540px"><img decoding="async" src="assets/r/t-lentes-1100.webp" srcset="assets/r/t-lentes-240.webp 240w, assets/r/t-lentes-480.webp 480w, assets/r/t-lentes-720.webp 720w, assets/r/t-lentes-1100.webp 1100w" sizes="(max-width: 900px) 92vw, 540px" alt="" loading="lazy" width="1400" height="1400"></picture></figure>
             <span class="tx__n">01</span>
             <h3 class="tx__title">Lentes e facetas</h3>
             <p class="tx__desc">Mudar cor, forma e tamanho dos dentes com um resultado que parece seu, não de outra pessoa.</p>
@@ -157,7 +153,7 @@
             <a class="tx__ask" data-wa="Lentes e facetas" href="#">Perguntar sobre lentes <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arrow"/></svg></a>
           </li>
           <li class="tx__item" data-tx="1">
-            <figure class="tx__thumb"><img src="assets/cirurgia.webp" alt="" loading="lazy" width="1400" height="1400"></figure>
+            <figure class="tx__thumb"><picture><source type="image/avif" srcset="assets/r/cirurgia-240.avif 240w, assets/r/cirurgia-480.avif 480w, assets/r/cirurgia-720.avif 720w" sizes="(max-width: 900px) 92vw, 540px"><img decoding="async" src="assets/r/cirurgia-720.webp" srcset="assets/r/cirurgia-240.webp 240w, assets/r/cirurgia-480.webp 480w, assets/r/cirurgia-720.webp 720w" sizes="(max-width: 900px) 92vw, 540px" alt="" loading="lazy" width="1400" height="1400"></picture></figure>
             <span class="tx__n">02</span>
             <h3 class="tx__title">Implantes</h3>
             <p class="tx__desc">Repor o dente que falta com uma raiz fixa, para voltar a mastigar e sorrir sem pensar nisso.</p>
@@ -165,7 +161,7 @@
             <a class="tx__ask" data-wa="Implantes" href="#">Perguntar sobre implantes <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arrow"/></svg></a>
           </li>
           <li class="tx__item" data-tx="2">
-            <figure class="tx__thumb"><img src="assets/t-clareamento.webp" alt="" loading="lazy" width="1400" height="1400"></figure>
+            <figure class="tx__thumb"><picture><source type="image/avif" srcset="assets/r/t-clareamento-240.avif 240w, assets/r/t-clareamento-480.avif 480w, assets/r/t-clareamento-720.avif 720w, assets/r/t-clareamento-1100.avif 1100w" sizes="(max-width: 900px) 92vw, 540px"><img decoding="async" src="assets/r/t-clareamento-1100.webp" srcset="assets/r/t-clareamento-240.webp 240w, assets/r/t-clareamento-480.webp 480w, assets/r/t-clareamento-720.webp 720w, assets/r/t-clareamento-1100.webp 1100w" sizes="(max-width: 900px) 92vw, 540px" alt="" loading="lazy" width="1400" height="1400"></picture></figure>
             <span class="tx__n">03</span>
             <h3 class="tx__title">Clareamento</h3>
             <p class="tx__desc">Dentes mais claros com acompanhamento de perto, para controlar a sensibilidade do começo ao fim.</p>
@@ -173,7 +169,7 @@
             <a class="tx__ask" data-wa="Clareamento" href="#">Perguntar sobre clareamento <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arrow"/></svg></a>
           </li>
           <li class="tx__item" data-tx="3">
-            <figure class="tx__thumb"><img src="assets/t-resina.webp" alt="" loading="lazy" width="1400" height="1400"></figure>
+            <figure class="tx__thumb"><picture><source type="image/avif" srcset="assets/r/t-resina-240.avif 240w, assets/r/t-resina-480.avif 480w, assets/r/t-resina-720.avif 720w, assets/r/t-resina-1100.avif 1100w" sizes="(max-width: 900px) 92vw, 540px"><img decoding="async" src="assets/r/t-resina-1100.webp" srcset="assets/r/t-resina-240.webp 240w, assets/r/t-resina-480.webp 480w, assets/r/t-resina-720.webp 720w, assets/r/t-resina-1100.webp 1100w" sizes="(max-width: 900px) 92vw, 540px" alt="" loading="lazy" width="1400" height="1400"></picture></figure>
             <span class="tx__n">04</span>
             <h3 class="tx__title">Restaurações em resina</h3>
             <p class="tx__desc">Corrigir cárie, lasca e pequeno desgaste no mesmo tom do seu dente, sem aquele remendo aparente.</p>
@@ -181,7 +177,7 @@
             <a class="tx__ask" data-wa="Restaurações em resina" href="#">Perguntar sobre restaurações <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arrow"/></svg></a>
           </li>
           <li class="tx__item" data-tx="4">
-            <figure class="tx__thumb"><img src="assets/t-limpeza.webp" alt="" loading="lazy" width="1400" height="1400"></figure>
+            <figure class="tx__thumb"><picture><source type="image/avif" srcset="assets/r/t-limpeza-240.avif 240w, assets/r/t-limpeza-480.avif 480w, assets/r/t-limpeza-720.avif 720w, assets/r/t-limpeza-1100.avif 1100w" sizes="(max-width: 900px) 92vw, 540px"><img decoding="async" src="assets/r/t-limpeza-1100.webp" srcset="assets/r/t-limpeza-240.webp 240w, assets/r/t-limpeza-480.webp 480w, assets/r/t-limpeza-720.webp 720w, assets/r/t-limpeza-1100.webp 1100w" sizes="(max-width: 900px) 92vw, 540px" alt="" loading="lazy" width="1400" height="1400"></picture></figure>
             <span class="tx__n">05</span>
             <h3 class="tx__title">Limpeza e prevenção</h3>
             <p class="tx__desc">A consulta que evita as outras. Tártaro, gengiva e revisão, antes que vire um problema maior.</p>
@@ -218,7 +214,7 @@
         </div>
 
         <div class="signs__visual reveal" data-parallax="-0.04">
-          <img src="assets/modelo-3d.webp" alt="Modelo 3D de arcada dentária com sinais de cárie, inflamação na gengiva e dente escurecido" width="1600" height="1600" loading="lazy">
+          <picture><source type="image/avif" srcset="assets/r/modelo-3d-240.avif 240w, assets/r/modelo-3d-480.avif 480w, assets/r/modelo-3d-720.avif 720w, assets/r/modelo-3d-1100.avif 1100w" sizes="(max-width: 900px) 92vw, 640px"><img decoding="async" src="assets/r/modelo-3d-1100.webp" srcset="assets/r/modelo-3d-240.webp 240w, assets/r/modelo-3d-480.webp 480w, assets/r/modelo-3d-720.webp 720w, assets/r/modelo-3d-1100.webp 1100w" sizes="(max-width: 900px) 92vw, 640px" alt="Modelo 3D de arcada dentária com sinais de cárie, inflamação na gengiva e dente escurecido" width="1600" height="1600" loading="lazy"></picture>
           <button type="button" class="hotspot hotspot--up is-active" style="--x:21%;--y:31%" data-sign="0" aria-label="Sinal 01, mancha escura"><span class="hotspot__ring"></span><span class="hotspot__tag">01</span></button>
           <button type="button" class="hotspot hotspot--up" style="--x:80%;--y:25%" data-sign="1" aria-label="Sinal 02, gengiva inflamada"><span class="hotspot__ring"></span><span class="hotspot__tag">02</span></button>
           <button type="button" class="hotspot hotspot--down" style="--x:61.5%;--y:73%" data-sign="2" aria-label="Sinal 03, dente escurecido"><span class="hotspot__ring"></span><span class="hotspot__tag">03</span></button>
@@ -292,9 +288,9 @@
         </div>
 
         <figure class="compare reveal" data-compare style="--pos:50%">
-          <img class="compare__img" src="assets/sorriso.webp" alt="Depois: dentes mais claros e uniformes" width="1600" height="890" loading="lazy">
+          <picture><source type="image/avif" srcset="assets/r/sorriso-240.avif 240w, assets/r/sorriso-480.avif 480w, assets/r/sorriso-720.avif 720w, assets/r/sorriso-1100.avif 1100w" sizes="(max-width: 900px) 92vw, 640px"><img decoding="async" class="compare__img" src="assets/r/sorriso-1100.webp" srcset="assets/r/sorriso-240.webp 240w, assets/r/sorriso-480.webp 480w, assets/r/sorriso-720.webp 720w, assets/r/sorriso-1100.webp 1100w" sizes="(max-width: 900px) 92vw, 640px" alt="Depois: dentes mais claros e uniformes" width="1600" height="890" loading="lazy"></picture>
           <div class="compare__before">
-            <img class="compare__img" src="assets/antes.webp" alt="Antes: dentes amarelados" width="1600" height="890" loading="lazy">
+            <picture><source type="image/avif" srcset="assets/r/antes-240.avif 240w, assets/r/antes-480.avif 480w, assets/r/antes-720.avif 720w, assets/r/antes-1100.avif 1100w" sizes="(max-width: 900px) 92vw, 640px"><img decoding="async" class="compare__img" src="assets/r/antes-1100.webp" srcset="assets/r/antes-240.webp 240w, assets/r/antes-480.webp 480w, assets/r/antes-720.webp 720w, assets/r/antes-1100.webp 1100w" sizes="(max-width: 900px) 92vw, 640px" alt="Antes: dentes amarelados" width="1600" height="890" loading="lazy"></picture>
           </div>
           <span class="compare__label compare__label--l">Antes</span>
           <span class="compare__label compare__label--r">Depois</span>
@@ -309,7 +305,7 @@
     <section class="steps section">
       <div class="wrap steps__grid">
         <figure class="steps__media">
-          <div class="steps__frame steps__frame--grid img-reveal"><img src="assets/bastidores.webp" alt="Nove fotos dos bastidores do consultório: procedimentos, os dois dentistas juntos e momentos com a equipe" loading="lazy" width="1100" height="1378"></div>
+          <div class="steps__frame steps__frame--grid img-reveal"><picture><source type="image/avif" srcset="assets/r/bastidores-240.avif 240w, assets/r/bastidores-480.avif 480w, assets/r/bastidores-720.avif 720w, assets/r/bastidores-1100.avif 1100w" sizes="(max-width: 900px) 92vw, 480px"><img decoding="async" src="assets/r/bastidores-1100.webp" srcset="assets/r/bastidores-240.webp 240w, assets/r/bastidores-480.webp 480w, assets/r/bastidores-720.webp 720w, assets/r/bastidores-1100.webp 1100w" sizes="(max-width: 900px) 92vw, 480px" alt="Nove fotos dos bastidores do consultório: procedimentos, os dois dentistas juntos e momentos com a equipe" loading="lazy" width="1100" height="1378"></picture></div>
           <figcaption class="steps__cap">Bastidores do nosso consultório, em São&nbsp;Carlos</figcaption>
         </figure>
         <div class="steps__body">
@@ -440,7 +436,6 @@
     <symbol id="i-arrow" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" d="M7 17 17 7M9 7h8v8"/></symbol>
   </svg>
 
-  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.min.js" defer></script>
   <script src="js/app.js" defer></script>
 </body>
 </html>
