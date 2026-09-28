@@ -58,10 +58,10 @@
     // se algo travar, a página aparece de qualquer jeito
     setTimeout(() => {
       document.querySelectorAll(".hero .reveal").forEach((el) => el.classList.add("is-in"));
-    }, 1200);
+    }, 900);
     setTimeout(() => {
       reveals.forEach((el) => { if (el.getBoundingClientRect().top < window.innerHeight) el.classList.add("is-in"); });
-    }, 3000);
+    }, 2500);
   }
 
   /* ---------- tratamentos: imagem que segue o cursor ---------- */
