@@ -7,7 +7,12 @@
 .nav__links a::after { content: ""; position: absolute; left: 0; right: 100%; bottom: 2px; height: 1px; background: currentColor; transition: right var(--dur-base) var(--ease-out); }
 .nav__links a:hover { color: var(--color-text); }
 .nav__links a:hover::after { right: 0; }
-@media (max-width: 900px) { .nav__links { display: none; } }
+@media (max-width: 900px) {
+  .nav__links { display: none; }
+  /* celular: menu fica no topo e rola junto; a barra de WhatsApp embaixo assume o CTA */
+  .nav { position: absolute; }
+  .nav.is-solid { background: none; box-shadow: none; }
+}
 @media (max-width: 420px) { .brand__name { display: none; } }
 
 /* ================= HERO ================= */
@@ -59,6 +64,16 @@ html:not(.anim) .pop { transform: none; transition: opacity 250ms linear; }
 }
 @media (max-width: 480px) {
   .hero__actions .btn { width: 100%; }
+}
+/* celular: primeira dobra toda centralizada */
+@media (max-width: 900px) {
+  .hero__copy { text-align: center; }
+  .hero .kicker { justify-content: center; }
+  .hero .kicker::before { display: none; }
+  .hero__sep { display: none; }
+  .hero__loc { display: block; margin-top: 2px; }
+  .hero__title, .hero__lead { margin-inline: auto; }
+  .hero__actions { justify-content: center; }
 }
 @media (max-width: 900px) { .hero::before { inset: 48% -30% 0 -30%; } }
 
