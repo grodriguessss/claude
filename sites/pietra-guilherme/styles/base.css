@@ -81,6 +81,7 @@ body::after {
 .no-js .reveal, .reveal-failsafe .reveal { opacity: 1; transform: none; }
 /* sem animação de entrada (celular ou reduced-motion): o hero pinta na hora, que é o que conta para o LCP */
 html:not(.anim) .hero .reveal { opacity: 1; transform: none; transition: none; }
+html:not(.anim) .reveal { --reveal-distance: 12px; transition-duration: 600ms; }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
