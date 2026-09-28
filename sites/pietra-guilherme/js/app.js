@@ -111,6 +111,12 @@
   (document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve()).then(splitHero);
   setTimeout(splitHero, 2500);
 
+  /* ---------- depois que a primeira tela carrega, baixa as outras fotos em segundo plano ---------- */
+  const warm = () => document.querySelectorAll('img[loading="lazy"]').forEach((im) => { im.loading = "eager"; });
+  const idle = window.requestIdleCallback || ((cb) => setTimeout(cb, 200));
+  if (document.readyState === "complete") idle(warm);
+  else window.addEventListener("load", () => idle(warm), { once: true });
+
   /* ---------- hero: fundo e recorte aparecem juntos ---------- */
   document.querySelectorAll("[data-pop]").forEach((pop) => {
     const show = () => pop.classList.add("is-ready");
