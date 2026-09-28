@@ -11,6 +11,7 @@
   <meta property="og:url" content="https://pietra-guilherme.vercel.app/">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="theme-color" content="#faf6f0">
+  <script>document.documentElement.classList.add("js")</script>
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -52,7 +53,7 @@
       <div class="hero__inner wrap">
         <div class="hero__copy">
           <p class="kicker reveal"><span>Estética dental e implantes · São&nbsp;Carlos,&nbsp;SP</span></p>
-          <h1 class="hero__title reveal">
+          <h1 class="hero__title" data-split>
             Aqui, a gente <em>descomplica</em> o seu sorriso.
           </h1>
           <p class="hero__lead reveal">
@@ -72,7 +73,7 @@
         <figure class="hero__visual reveal">
           <p class="mark mark--tl" aria-hidden="true">Dra.&nbsp;Pietra<br><b>Michelin</b></p>
           <p class="mark mark--tr" aria-hidden="true">Dr.&nbsp;Guilherme<br><b>Mattos</b></p>
-          <div class="arch">
+          <div class="arch img-reveal">
             <!-- TROCAR: foto do casal (vertical, 4:5) -->
             <img src="assets/depois.webp" alt="Sorriso natural após tratamento estético" width="1600" height="1067" fetchpriority="high">
           </div>
@@ -87,10 +88,15 @@
       </div>
     </section>
 
+    <!-- ============ FAIXA ============ -->
+    <div class="mq" aria-hidden="true">
+      <div class="mq__track"><div class="mq__seq"><span class="mq__item">Lentes de contato</span><span class="mq__pill"><img src="assets/t-lentes.webp" alt="" loading="lazy" width="120" height="80"></span><span class="mq__item">Facetas</span><span class="mq__pill"><img src="assets/t-resina.webp" alt="" loading="lazy" width="120" height="80"></span><span class="mq__item">Implantes</span><span class="mq__pill"><img src="assets/t-implantes.webp" alt="" loading="lazy" width="120" height="80"></span><span class="mq__item">Clareamento</span><span class="mq__pill"><img src="assets/t-clareamento.webp" alt="" loading="lazy" width="120" height="80"></span><span class="mq__item">Restaurações</span><span class="mq__pill"><img src="assets/depois.webp" alt="" loading="lazy" width="120" height="80"></span><span class="mq__item">Prevenção</span><span class="mq__pill"><img src="assets/t-limpeza.webp" alt="" loading="lazy" width="120" height="80"></span></div><div class="mq__seq"><span class="mq__item">Lentes de contato</span><span class="mq__pill"><img src="assets/t-lentes.webp" alt="" loading="lazy" width="120" height="80"></span><span class="mq__item">Facetas</span><span class="mq__pill"><img src="assets/t-resina.webp" alt="" loading="lazy" width="120" height="80"></span><span class="mq__item">Implantes</span><span class="mq__pill"><img src="assets/t-implantes.webp" alt="" loading="lazy" width="120" height="80"></span><span class="mq__item">Clareamento</span><span class="mq__pill"><img src="assets/t-clareamento.webp" alt="" loading="lazy" width="120" height="80"></span><span class="mq__item">Restaurações</span><span class="mq__pill"><img src="assets/depois.webp" alt="" loading="lazy" width="120" height="80"></span><span class="mq__item">Prevenção</span><span class="mq__pill"><img src="assets/t-limpeza.webp" alt="" loading="lazy" width="120" height="80"></span></div></div>
+    </div>
+
     <!-- ============ FRASE-MANIFESTO ============ -->
     <section class="manifest" aria-label="Por que não esperar">
       <div class="wrap">
-        <p class="manifest__line reveal">
+        <p class="manifest__line" data-lit>
           Adiar o
           <span class="pill-img"><img src="assets/sorriso-detalhe.webp" alt="" width="1600" height="989" loading="lazy"></span>
           <em>simples</em> pode tornar o tratamento
@@ -139,7 +145,7 @@
     </section>
 
     <!-- ============ TRATAMENTOS ============ -->
-    <section class="treat section" id="tratamentos">
+    <section class="tx section" id="tratamentos">
       <div class="wrap">
         <div class="section-head">
           <p class="kicker reveal"><span class="kicker__n">02/08</span>Tratamentos</p>
@@ -147,39 +153,61 @@
           <p class="body section-head__aside reveal">Um tratamento, uma frase, zero termo técnico. Toque em “perguntar” e a conversa no WhatsApp já abre com o assunto.</p>
         </div>
 
-        <ol class="treat__list" data-treat>
-          <li class="treat__row reveal" data-img="assets/escala-cor.webp">
-            <span class="treat__n">01</span>
-            <h3 class="treat__title">Lentes e facetas</h3>
-            <p class="treat__desc">Mudar cor, forma e tamanho dos dentes com um resultado que parece seu, não de outra pessoa.</p>
-            <a class="treat__ask" data-wa="Lentes e facetas" href="#">Perguntar <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        <div class="tx__grid">
+          <div class="tx__stage" aria-hidden="true">
+            <div class="tx__arch">
+            <img class="tx__frame is-on" src="assets/t-lentes.webp" alt="Lentes e facetas" loading="lazy" width="1400" height="1400" data-frame="0">
+            <img class="tx__frame" src="assets/t-implantes.webp" alt="Implantes" loading="lazy" width="1400" height="1400" data-frame="1">
+            <img class="tx__frame" src="assets/t-clareamento.webp" alt="Clareamento" loading="lazy" width="1400" height="1400" data-frame="2">
+            <img class="tx__frame" src="assets/t-resina.webp" alt="Restaurações em resina" loading="lazy" width="1400" height="1400" data-frame="3">
+            <img class="tx__frame" src="assets/t-limpeza.webp" alt="Limpeza e prevenção" loading="lazy" width="1400" height="1400" data-frame="4">
+            </div>
+            <p class="tx__count"><span data-tx-count>01</span> / 05</p>
+            <p class="tx__caption" data-tx-caption>Lentes e facetas</p>
+          </div>
+          <ol class="tx__list" data-tx-list>
+          <li class="tx__item" data-tx="0">
+            <figure class="tx__thumb"><img src="assets/t-lentes.webp" alt="" loading="lazy" width="1400" height="1400"></figure>
+            <span class="tx__n">01</span>
+            <h3 class="tx__title">Lentes e facetas</h3>
+            <p class="tx__desc">Mudar cor, forma e tamanho dos dentes com um resultado que parece seu, não de outra pessoa.</p>
+            <p class="tx__note">Lâminas finas de porcelana, planejadas dente a dente.</p>
+            <a class="tx__ask" data-wa="Lentes e facetas" href="#">Perguntar sobre lentes <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arrow"/></svg></a>
           </li>
-          <li class="treat__row reveal" data-img="assets/implante.webp">
-            <span class="treat__n">02</span>
-            <h3 class="treat__title">Implantes</h3>
-            <p class="treat__desc">Repor o dente que falta com uma raiz fixa, para voltar a mastigar e sorrir sem pensar nisso.</p>
-            <a class="treat__ask" data-wa="Implantes" href="#">Perguntar <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+          <li class="tx__item" data-tx="1">
+            <figure class="tx__thumb"><img src="assets/t-implantes.webp" alt="" loading="lazy" width="1400" height="1400"></figure>
+            <span class="tx__n">02</span>
+            <h3 class="tx__title">Implantes</h3>
+            <p class="tx__desc">Repor o dente que falta com uma raiz fixa, para voltar a mastigar e sorrir sem pensar nisso.</p>
+            <p class="tx__note">Raiz de titânio e coroa de cerâmica no tom dos seus dentes.</p>
+            <a class="tx__ask" data-wa="Implantes" href="#">Perguntar sobre implantes <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arrow"/></svg></a>
           </li>
-          <li class="treat__row reveal" data-img="assets/sorriso.webp">
-            <span class="treat__n">03</span>
-            <h3 class="treat__title">Clareamento</h3>
-            <p class="treat__desc">Dentes mais claros com acompanhamento de perto, para controlar a sensibilidade do começo ao fim.</p>
-            <a class="treat__ask" data-wa="Clareamento" href="#">Perguntar <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+          <li class="tx__item" data-tx="2">
+            <figure class="tx__thumb"><img src="assets/t-clareamento.webp" alt="" loading="lazy" width="1400" height="1400"></figure>
+            <span class="tx__n">03</span>
+            <h3 class="tx__title">Clareamento</h3>
+            <p class="tx__desc">Dentes mais claros com acompanhamento de perto, para controlar a sensibilidade do começo ao fim.</p>
+            <p class="tx__note">Cor planejada para parecer natural, nunca artificial.</p>
+            <a class="tx__ask" data-wa="Clareamento" href="#">Perguntar sobre clareamento <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arrow"/></svg></a>
           </li>
-          <li class="treat__row reveal" data-img="assets/sorriso-detalhe.webp">
-            <span class="treat__n">04</span>
-            <h3 class="treat__title">Restaurações em resina</h3>
-            <p class="treat__desc">Corrigir cárie, lasca e pequeno desgaste no mesmo tom do seu dente, sem aquele remendo aparente.</p>
-            <a class="treat__ask" data-wa="Restaurações em resina" href="#">Perguntar <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+          <li class="tx__item" data-tx="3">
+            <figure class="tx__thumb"><img src="assets/t-resina.webp" alt="" loading="lazy" width="1400" height="1400"></figure>
+            <span class="tx__n">04</span>
+            <h3 class="tx__title">Restaurações em resina</h3>
+            <p class="tx__desc">Corrigir cárie, lasca e pequeno desgaste no mesmo tom do seu dente, sem aquele remendo aparente.</p>
+            <p class="tx__note">Resolve na mesma consulta na maioria dos casos.</p>
+            <a class="tx__ask" data-wa="Restaurações em resina" href="#">Perguntar sobre restaurações <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arrow"/></svg></a>
           </li>
-          <li class="treat__row reveal" data-img="assets/paciente-sorrindo.webp">
-            <span class="treat__n">05</span>
-            <h3 class="treat__title">Limpeza e prevenção</h3>
-            <p class="treat__desc">A consulta que evita as outras. Tártaro, gengiva e revisão, antes que vire um problema maior.</p>
-            <a class="treat__ask" data-wa="Limpeza e prevenção" href="#">Perguntar <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+          <li class="tx__item" data-tx="4">
+            <figure class="tx__thumb"><img src="assets/t-limpeza.webp" alt="" loading="lazy" width="1400" height="1400"></figure>
+            <span class="tx__n">05</span>
+            <h3 class="tx__title">Limpeza e prevenção</h3>
+            <p class="tx__desc">A consulta que evita as outras. Tártaro, gengiva e revisão, antes que vire um problema maior.</p>
+            <p class="tx__note">O jeito mais barato de cuidar do sorriso.</p>
+            <a class="tx__ask" data-wa="Limpeza e prevenção" href="#">Perguntar sobre limpeza <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arrow"/></svg></a>
           </li>
-        </ol>
-        <div class="treat__peek" aria-hidden="true"><img alt="" data-peek></div>
+          </ol>
+        </div>
       </div>
     </section>
 
@@ -204,7 +232,7 @@
           </div>
         </div>
 
-        <div class="signs__visual reveal">
+        <div class="signs__visual reveal" data-parallax="-0.04">
           <img src="assets/modelo-3d.webp" alt="Modelo 3D de arcada dentária com sinais de cárie, inflamação na gengiva e dente escurecido" width="1600" height="1600" loading="lazy">
           <button type="button" class="hotspot is-active" style="--x:20%;--y:33%" data-sign="0" aria-label="Sinal 01, mancha escura"><span>01</span></button>
           <button type="button" class="hotspot" style="--x:80%;--y:25%" data-sign="1" aria-label="Sinal 02, gengiva"><span>02</span></button>
@@ -215,31 +243,36 @@
 
     <!-- ============ DICIONÁRIO (assinatura) ============ -->
     <section class="dict section" id="dicionario">
+      <img class="dict__bg" src="assets/t-lentes.webp" alt="" aria-hidden="true" loading="lazy" width="1400" height="933">
       <div class="wrap">
         <div class="dict__head">
           <p class="kicker kicker--inverse reveal"><span class="kicker__n">04/08</span>Dicionário descomplicado</p>
           <h2 class="h2 reveal">O dentista falou. <em>A gente traduz.</em></h2>
         </div>
 
-        <div class="dict__grid">
-          <div class="dict__terms" role="tablist" aria-label="Termos" data-dict>
-            <button role="tab" class="term is-active" aria-selected="true" data-term="0">Lente de contato dental</button>
-            <button role="tab" class="term" aria-selected="false" data-term="1">Faceta</button>
-            <button role="tab" class="term" aria-selected="false" data-term="2">Implante</button>
-            <button role="tab" class="term" aria-selected="false" data-term="3">Carga imediata</button>
-            <button role="tab" class="term" aria-selected="false" data-term="4">Enxerto ósseo</button>
-            <button role="tab" class="term" aria-selected="false" data-term="5">Tártaro</button>
-            <button role="tab" class="term" aria-selected="false" data-term="6">Gengivoplastia</button>
+        <div class="tr reveal" data-tr>
+          <div class="tr__rail" role="tablist" aria-label="Termos">
+            <button role="tab" class="chip is-active" aria-selected="true" data-term="0"><span class="chip__bar"></span>Lente de contato</button>
+            <button role="tab" class="chip" aria-selected="false" data-term="1"><span class="chip__bar"></span>Faceta</button>
+            <button role="tab" class="chip" aria-selected="false" data-term="2"><span class="chip__bar"></span>Implante</button>
+            <button role="tab" class="chip" aria-selected="false" data-term="3"><span class="chip__bar"></span>Carga imediata</button>
+            <button role="tab" class="chip" aria-selected="false" data-term="4"><span class="chip__bar"></span>Enxerto ósseo</button>
+            <button role="tab" class="chip" aria-selected="false" data-term="5"><span class="chip__bar"></span>Tártaro</button>
+            <button role="tab" class="chip" aria-selected="false" data-term="6"><span class="chip__bar"></span>Gengivoplastia</button>
           </div>
 
-          <div class="dict__card" role="tabpanel" aria-live="polite">
-            <p class="dict__label">Em português claro</p>
-            <p class="dict__word" data-dict-word>Lente de contato dental</p>
-            <p class="dict__meaning" data-dict-meaning>Uma lâmina muito fina de porcelana colada na frente do dente. Muda cor e formato quase sem desgastar o que é seu.</p>
-            <a class="dict__ask" data-wa-dict href="#">
-              Tenho dúvida sobre isso
-              <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arrow"/></svg>
-            </a>
+          <div class="tr__stage" role="tabpanel" aria-live="polite">
+            <div class="tr__said">
+              <p class="tr__label">O dentista diz</p>
+              <p class="tr__jargon" data-tr-jargon></p>
+            </div>
+            <div class="tr__turn" aria-hidden="true"><span></span></div>
+            <div class="tr__plain">
+              <p class="tr__label tr__label--accent">A gente traduz</p>
+              <p class="tr__word" data-tr-word></p>
+              <p class="tr__meaning" data-tr-meaning></p>
+              <a class="tr__ask" data-wa-dict href="#">Tenho dúvida sobre isso <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+            </div>
           </div>
         </div>
       </div>
@@ -259,7 +292,7 @@
           </ul>
         </div>
 
-        <figure class="compare reveal" data-compare style="--pos:50%">
+        <figure class="compare img-reveal" data-compare style="--pos:50%">
           <img class="compare__img" src="assets/sorriso.webp" alt="Depois: dentes mais claros e uniformes" width="1600" height="890" loading="lazy">
           <div class="compare__before">
             <img class="compare__img" src="assets/antes.webp" alt="Antes: dentes amarelados" width="1600" height="890" loading="lazy">
@@ -279,6 +312,7 @@
         <div class="section-head">
           <p class="kicker reveal"><span class="kicker__n">06/08</span>Como funciona</p>
           <h2 class="h2 reveal">Do primeiro “oi” <em>ao sorriso pronto.</em></h2>
+          <figure class="steps__photo img-reveal"><img src="assets/sala.webp" alt="Paciente tranquila na sala de espera" loading="lazy" width="1400" height="2037" data-parallax="0.05"></figure>
         </div>
         <ol class="steps__list">
           <li class="step reveal">
@@ -314,6 +348,7 @@
         </div>
         <div class="cafe__grid">
           <article class="truth truth--tall reveal">
+            <figure class="truth__photo" data-parallax="-0.06"><img src="assets/escova.webp" alt="" loading="lazy" width="1400" height="1750"></figure>
             <span class="truth__n">i.</span>
             <p class="truth__t">Escovar todo dia <em>não impede</em> o tártaro de aparecer.</p>
             <p class="truth__b">Ele se forma nos cantos que a escova não alcança. Só sai na limpeza do consultório.</p>

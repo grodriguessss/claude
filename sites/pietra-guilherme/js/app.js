@@ -41,54 +41,123 @@
   }
   onScroll();
 
-  /* ---------- revelação com failsafe ---------- */
+  /* ---------- quebra de texto para animação ---------- */
   const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const reveals = document.querySelectorAll(".reveal");
+  const splitWords = (el, cls = "w") => {
+    let i = 0;
+    const walk = (node) => {
+      [...node.childNodes].forEach((n) => {
+        if (n.nodeType === 3) {
+          const frag = document.createDocumentFragment();
+          n.textContent.split(/(\s+)/).forEach((part) => {
+            if (!part) return;
+            if (/^\s+$/.test(part)) { frag.appendChild(document.createTextNode(part)); return; }
+            const sp = document.createElement("span");
+            sp.className = cls; sp.style.setProperty("--i", i++); sp.textContent = part;
+            frag.appendChild(sp);
+          });
+          n.replaceWith(frag);
+        } else if (n.nodeType === 1 && !n.classList.contains("pill-img")) walk(n);
+      });
+    };
+    walk(el);
+    return i;
+  };
+
+  // hero: título linha a linha, depois da fonte carregar
+  const splitHero = () => document.querySelectorAll("[data-split]:not(.is-split)").forEach((h) => {
+    h.classList.add("is-split");
+    if (reduce) return;
+    splitWords(h, "sw");
+    const words = [...h.querySelectorAll(".sw")];
+    const lines = [];
+    words.forEach((w) => {
+      const top = w.offsetTop;
+      let line = lines.find((l) => Math.abs(l.top - top) < 8);
+      if (!line) { line = { top, words: [] }; lines.push(line); }
+      line.words.push(w);
+    });
+    h.innerHTML = lines.map((l, i) =>
+      `<span class="ln"><span style="--i:${i}">${l.words.map((w) => w.parentElement.tagName === "EM" ? `<em>${w.textContent}</em>` : w.textContent).join(" ")}</span></span>`
+    ).join("");
+    requestAnimationFrame(() => requestAnimationFrame(() => h.classList.add("is-in")));
+  });
+  (document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve()).then(splitHero);
+  setTimeout(splitHero, 2500);
+
+  /* ---------- revelação com failsafe ---------- */
+  const reveals = document.querySelectorAll(".reveal, .img-reveal, .step");
   if (reduce || !("IntersectionObserver" in window)) {
     doc.classList.add("reveal-failsafe");
+    reveals.forEach((el) => el.classList.add("is-in"));
   } else {
-    // escalonamento dentro de cada seção
     document.querySelectorAll("section, footer").forEach((s) => {
-      s.querySelectorAll(".reveal").forEach((el, i) => el.style.setProperty("--d", `${Math.min(i, 6) * 80}ms`));
+      s.querySelectorAll(".reveal, .step").forEach((el, i) => el.style.setProperty("--d", `${Math.min(i, 6) * 80}ms`));
     });
     const io = new IntersectionObserver((entries) => {
       entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("is-in"); io.unobserve(e.target); } });
     }, { rootMargin: "0px 0px -8% 0px", threshold: 0.08 });
     reveals.forEach((el) => io.observe(el));
-    // se algo travar, a página aparece de qualquer jeito
-    setTimeout(() => {
-      document.querySelectorAll(".hero .reveal").forEach((el) => el.classList.add("is-in"));
-    }, 900);
-    setTimeout(() => {
-      reveals.forEach((el) => { if (el.getBoundingClientRect().top < window.innerHeight) el.classList.add("is-in"); });
-    }, 2500);
+    setTimeout(() => document.querySelectorAll(".hero .reveal, .hero .img-reveal").forEach((el) => el.classList.add("is-in")), 700);
+    setTimeout(() => reveals.forEach((el) => { if (el.getBoundingClientRect().top < window.innerHeight) el.classList.add("is-in"); }), 2500);
   }
 
-  /* ---------- tratamentos: imagem que segue o cursor ---------- */
-  const list = document.querySelector("[data-treat]");
-  const peek = document.querySelector(".treat__peek");
-  const peekImg = document.querySelector("[data-peek]");
-  if (list && peek && window.matchMedia("(hover: hover)").matches) {
-    const wrap = list.parentElement;
-    let raf = null, tx = 0, ty = 0, x = 0, y = 0;
-    const loop = () => {
-      x += (tx - x) * 0.18; y += (ty - y) * 0.18;
-      peek.style.transform = `translate(${x}px, ${y}px)`;
-      raf = Math.abs(tx - x) + Math.abs(ty - y) > 0.5 ? requestAnimationFrame(loop) : null;
-    };
-    list.querySelectorAll(".treat__row").forEach((row) => {
-      row.addEventListener("mouseenter", () => {
-        if (peekImg.getAttribute("src") !== row.dataset.img) peekImg.src = row.dataset.img;
-        peek.classList.add("is-on");
-      });
-    });
-    list.addEventListener("mouseleave", () => peek.classList.remove("is-on"));
-    list.addEventListener("mousemove", (e) => {
-      const r = wrap.getBoundingClientRect();
-      tx = e.clientX - r.left + 28; ty = e.clientY - r.top - 170;
-      if (!raf) raf = requestAnimationFrame(loop);
-    });
+  /* ---------- frase que acende no scroll + parallax ---------- */
+  const lit = document.querySelector("[data-lit]");
+  let litUnits = [];
+  if (lit) {
+    splitWords(lit);
+    litUnits = [...lit.querySelectorAll(".w, .pill-img")];
+    if (reduce) litUnits.forEach((u) => u.classList.add("on"));
   }
+  const px = reduce ? [] : [...document.querySelectorAll("[data-parallax]")];
+  let ticking = false;
+  const onFrame = () => {
+    ticking = false;
+    const vh = window.innerHeight;
+    if (lit && !reduce) {
+      const r = lit.getBoundingClientRect();
+      const p = Math.min(Math.max((vh * 0.85 - r.top) / (r.height + vh * 0.35), 0), 1);
+      const n = Math.round(p * litUnits.length);
+      litUnits.forEach((u, i) => u.classList.toggle("on", i < n));
+    }
+    px.forEach((el) => {
+      const r = el.getBoundingClientRect();
+      if (r.bottom < 0 || r.top > vh) return;
+      const off = (r.top + r.height / 2 - vh / 2) * parseFloat(el.dataset.parallax);
+      el.style.transform = `translate3d(0, ${off.toFixed(1)}px, 0)`;
+    });
+  };
+  const requestFrame = () => { if (!ticking) { ticking = true; requestAnimationFrame(onFrame); } };
+  window.addEventListener("scroll", requestFrame, { passive: true });
+  window.addEventListener("resize", requestFrame);
+  onFrame();
+
+  /* ---------- tratamentos: palco fixo que troca de foto ---------- */
+  const txItems = [...document.querySelectorAll("[data-tx]")];
+  const txFrames = [...document.querySelectorAll("[data-frame]")];
+  const txCount = document.querySelector("[data-tx-count]");
+  const txCap = document.querySelector("[data-tx-caption]");
+  let txActive = -1;
+  const setTx = (i) => {
+    if (i === txActive) return;
+    txFrames.forEach((f, k) => {
+      f.classList.toggle("was-on", k === txActive);
+      f.classList.toggle("is-on", k === i);
+      if (k !== i && k !== txActive) f.classList.remove("was-on");
+    });
+    txItems.forEach((it, k) => it.classList.toggle("is-active", k === i));
+    txActive = i;
+    if (txCount) txCount.textContent = String(i + 1).padStart(2, "0");
+    if (txCap) txCap.textContent = txItems[i].querySelector(".tx__title").textContent;
+  };
+  if (txItems.length && "IntersectionObserver" in window) {
+    const txIo = new IntersectionObserver((entries) => {
+      entries.forEach((e) => { if (e.isIntersecting) setTx(txItems.indexOf(e.target)); });
+    }, { rootMargin: "-45% 0px -45% 0px", threshold: 0 });
+    txItems.forEach((it) => txIo.observe(it));
+  }
+  if (txItems.length) setTx(0);
 
   /* ---------- sinais no modelo 3D ---------- */
   const signs = [
@@ -106,44 +175,96 @@
   };
   signBtns.forEach((b) => b.addEventListener("click", () => setSign(+b.dataset.sign)));
 
-  /* ---------- dicionário ---------- */
+  /* ---------- tradutor: dentista diz → a gente traduz ---------- */
   const dict = [
-    ["Lente de contato dental", "Uma lâmina muito fina de porcelana colada na frente do dente. Muda cor e formato quase sem desgastar o que é seu."],
-    ["Faceta", "Parecida com a lente, só que um pouco mais espessa. Entra quando o dente precisa de mais correção de cor ou de forma."],
-    ["Implante", "Um pino de titânio que faz o papel da raiz. Em cima dele vai a coroa, que é a parte que aparece quando você sorri."],
-    ["Carga imediata", "Quando o dente provisório é colocado logo depois do implante, sem você ficar dias sem dente. Depende de cada caso."],
-    ["Enxerto ósseo", "Um reforço no osso quando ele não tem volume suficiente para segurar o implante com firmeza."],
-    ["Tártaro", "Placa bacteriana que endureceu. A escova não tira mais. Só sai na limpeza feita no consultório."],
-    ["Gengivoplastia", "Um ajuste no contorno da gengiva, para o sorriso mostrar mais dente e menos gengiva."],
+    ["Lente de contato dental",
+     "Indicamos laminados cerâmicos ultrafinos, com preparo minimamente invasivo.",
+     "Uma lâmina muito fina de porcelana colada na frente do dente. Muda cor e formato quase sem desgastar o que é seu."],
+    ["Faceta",
+     "Vamos fazer facetas em resina composta ou cerâmica, com leve redução de esmalte.",
+     "Parecida com a lente, só que um pouco mais espessa. Entra quando o dente precisa de mais correção de cor ou de forma."],
+    ["Implante",
+     "Será instalado um implante osseointegrável de titânio, com coroa protética sobre implante.",
+     "Um pino de titânio que faz o papel da raiz. Em cima dele vai a coroa, que é a parte que aparece quando você sorri."],
+    ["Carga imediata",
+     "O caso permite carga imediata, com instalação do provisório na mesma sessão cirúrgica.",
+     "O dente provisório entra logo depois do implante, sem você ficar dias sem dente. Depende de cada caso."],
+    ["Enxerto ósseo",
+     "Há reabsorção do rebordo alveolar. Precisamos de enxerto ósseo antes do implante.",
+     "Um reforço no osso quando ele não tem volume suficiente para segurar o implante com firmeza."],
+    ["Tártaro",
+     "Observa-se presença de cálculo dentário supragengival na região anteroinferior.",
+     "Placa bacteriana que endureceu atrás dos dentes de baixo. A escova não tira mais. Só sai na limpeza do consultório."],
+    ["Gengivoplastia",
+     "Para o sorriso gengival, indico gengivoplastia com recontorno do zênite.",
+     "Um ajuste no contorno da gengiva, para o sorriso mostrar mais dente e menos gengiva."],
   ];
-  const terms = document.querySelectorAll("[data-term]");
-  const dWord = document.querySelector("[data-dict-word]");
-  const dMean = document.querySelector("[data-dict-meaning]");
-  const dAsk = document.querySelector("[data-wa-dict]");
-  const setTerm = (i) => {
-    terms.forEach((t) => {
-      const on = t.dataset.term === String(i);
-      t.classList.toggle("is-active", on);
-      t.setAttribute("aria-selected", on);
-      t.tabIndex = on ? 0 : -1;
+  const trRoot = document.querySelector("[data-tr]");
+  if (trRoot) {
+    const chips = [...trRoot.querySelectorAll("[data-term]")];
+    const stage = trRoot.querySelector(".tr__stage");
+    const jEl = trRoot.querySelector("[data-tr-jargon]");
+    const wEl = trRoot.querySelector("[data-tr-word]");
+    const mEl = trRoot.querySelector("[data-tr-meaning]");
+    const ask = trRoot.querySelector("[data-wa-dict]");
+    ask.target = "_blank"; ask.rel = "noopener";
+    const DUR = 7500;
+    let cur = 0, t0 = 0, timers = [], auto = !reduce, visible = false, paused = false, raf = null;
+
+    const play = (i) => {
+      timers.forEach(clearTimeout); timers = [];
+      cur = i; t0 = performance.now();
+      chips.forEach((c, k) => {
+        const on = k === i;
+        c.classList.toggle("is-active", on); c.setAttribute("aria-selected", on); c.tabIndex = on ? 0 : -1;
+        c.style.setProperty("--p", on && !auto ? 1 : 0);
+      });
+      const [word, said, plain] = dict[i];
+      jEl.innerHTML = `“<span class="strike">${said}</span>”`;
+      mEl.textContent = plain;
+      wEl.textContent = word;
+      ask.href = waUrl(`${base} e fiquei com uma dúvida sobre ${word.toLowerCase()}.`);
+      if (reduce) { jEl.classList.add("is-in", "is-struck"); mEl.classList.add("is-in"); stage.classList.add("is-turned"); return; }
+      splitWords(jEl.querySelector(".strike")); splitWords(mEl);
+      [jEl, mEl].forEach((el) => el.classList.remove("is-in", "is-struck"));
+      stage.classList.remove("is-turned");
+      wEl.style.opacity = 0;
+      timers.push(setTimeout(() => jEl.classList.add("is-in"), 60));
+      timers.push(setTimeout(() => jEl.classList.add("is-struck"), 1500));
+      timers.push(setTimeout(() => stage.classList.add("is-turned"), 2100));
+      timers.push(setTimeout(() => { wEl.style.transition = "opacity 600ms"; wEl.style.opacity = 1; mEl.classList.add("is-in"); }, 2500));
+    };
+    const tick = (now) => {
+      raf = null;
+      if (!auto || !visible) return;
+      if (paused) { t0 = now - (chips[cur].style.getPropertyValue("--p") || 0) * DUR; raf = requestAnimationFrame(tick); return; }
+      const p = Math.min((now - t0) / DUR, 1);
+      chips[cur].style.setProperty("--p", p.toFixed(3));
+      if (p >= 1) play((cur + 1) % dict.length);
+      raf = requestAnimationFrame(tick);
+    };
+    const stopAuto = () => { auto = false; chips.forEach((c, k) => c.style.setProperty("--p", k === cur ? 1 : 0)); };
+    chips.forEach((c) => {
+      c.addEventListener("click", () => { stopAuto(); play(+c.dataset.term); c.scrollIntoView({ block: "nearest", inline: "center", behavior: "smooth" }); });
+      c.addEventListener("keydown", (e) => {
+        if (!["ArrowRight", "ArrowLeft"].includes(e.key)) return;
+        e.preventDefault(); stopAuto();
+        const n = (cur + (e.key === "ArrowRight" ? 1 : -1) + dict.length) % dict.length;
+        play(n); chips[n].focus();
+      });
     });
-    dWord.textContent = dict[i][0];
-    dMean.textContent = dict[i][1];
-    [dWord, dMean].forEach((el) => { el.classList.remove("is-swap"); void el.offsetWidth; el.classList.add("is-swap"); });
-    dAsk.href = waUrl(`${base} e fiquei com uma dúvida sobre ${dict[i][0].toLowerCase()}.`);
-  };
-  dAsk.target = "_blank"; dAsk.rel = "noopener";
-  terms.forEach((t) => {
-    t.addEventListener("click", () => setTerm(+t.dataset.term));
-    t.addEventListener("keydown", (e) => {
-      if (!["ArrowDown", "ArrowUp", "ArrowRight", "ArrowLeft"].includes(e.key)) return;
-      e.preventDefault();
-      const dir = e.key === "ArrowDown" || e.key === "ArrowRight" ? 1 : -1;
-      const n = (+t.dataset.term + dir + dict.length) % dict.length;
-      setTerm(n); terms[n].focus();
-    });
-  });
-  setTerm(0);
+    stage.addEventListener("mouseenter", () => { paused = true; });
+    stage.addEventListener("mouseleave", () => { paused = false; });
+    ask.addEventListener("focus", () => { paused = true; });
+    ask.addEventListener("blur", () => { paused = false; });
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver(([e]) => {
+        visible = e.isIntersecting;
+        if (visible && !raf) { t0 = performance.now() - parseFloat(chips[cur].style.getPropertyValue("--p") || 0) * DUR; raf = requestAnimationFrame(tick); }
+      }, { threshold: 0.35 }).observe(trRoot);
+    }
+    play(0);
+  }
 
   /* ---------- antes e depois ---------- */
   document.querySelectorAll("[data-compare]").forEach((c) => {

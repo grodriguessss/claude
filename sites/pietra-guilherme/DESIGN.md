@@ -68,3 +68,27 @@ Azul clínico. Depoimento inventado. Número de vaidade sem fonte. Vídeo de pro
 | Sobrenomes Michelin e Mattos (lidos na placa de um post) | trocar em hero, Nós e rodapé |
 | "Mostramos opções e valores antes" como processo | reescrever passo 03 e o ticket |
 | Pagamento: nada prometido (sem Pix, sem parcelamento) | se tiver parcelamento, entra no ticket, perto do CTA |
+
+## Movimento (rodada 3)
+
+- Hero: título entra linha a linha por máscara (1.2s, stagger 110ms), foto revela de baixo para cima.
+- Faixa de tratamentos com pílulas de imagem, 48s por volta, pausa no hover.
+- Frase "Adiar o simples" acende palavra por palavra no scroll.
+- Tratamentos: palco fixo em arco que troca de foto por revelação conforme o item ativo; no mobile cada item tem foto própria.
+- Dicionário virou tradutor em formato de stories: jargão aparece, é riscado, a tradução entra palavra por palavra. Avança sozinho a cada 7.5s só quando visível, pausa no hover e para quando a pessoa escolhe um termo.
+- Linhas do passo a passo se desenham; parallax leve no modelo 3D, na sala e na escova.
+- Tudo desliga com prefers-reduced-motion. JavaScript puro, sem biblioteca.
+
+## Créditos de imagem (Unsplash, licença livre)
+
+| Arquivo | Origem |
+|---|---|
+| t-lentes.webp | https://unsplash.com/photos/photo-1660300110546-3b39e353b672 |
+| t-implantes.webp | https://unsplash.com/photos/photo-1660300110556-fa3ccf6f4eb1 |
+| t-clareamento.webp | https://unsplash.com/photos/photo-1654373535457-383a0a4d00f9 |
+| t-resina.webp | https://unsplash.com/photos/photo-1690167687106-180b0ea1d813 |
+| t-limpeza.webp | https://unsplash.com/photos/photo-1617984161716-189c889bd474 |
+| escova.webp | https://unsplash.com/photos/photo-1634068966402-86a27b9d57c1 |
+| sala.webp | https://unsplash.com/photos/photo-1759262151080-e05ba1c6294f |
+
+As demais imagens vêm do template Dentel (referência de prospecção). Trocar por fotos próprias da clínica antes de publicar de verdade.
