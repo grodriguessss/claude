@@ -20,8 +20,9 @@ for arq in sorted(ORIGEM.iterdir()):
     im = Image.open(arq)
     tem_alfa = im.mode in ("RGBA", "LA") or "transparency" in im.info
     im = im.convert("RGBA" if tem_alfa else "RGB")
-    for w in LARGURAS:
-        if w > im.width and w != LARGURAS[0]:
+    for i, w in enumerate(LARGURAS):
+        # acima da largura original só gera uma variante, no tamanho real (sem ampliar)
+        if i > 0 and LARGURAS[i - 1] >= im.width:
             continue
         alvo = min(w, im.width)
         v = im.resize((alvo, round(im.height * alvo / im.width)), Image.LANCZOS)
