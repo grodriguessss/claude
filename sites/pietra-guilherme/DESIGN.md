@@ -14,7 +14,7 @@
 | `--color-surface-inverse` | #1f1814 | dicionário, CTA final |
 | `--color-text` | #2b211c | texto principal |
 | `--color-text-soft` | #54433a | corpo |
-| `--color-text-muted` | #8a7263 | kicker, legenda |
+| `--color-text-muted` | #76604f | kicker, legenda (5.5:1) |
 | `--color-accent` | #5c6046 | acento único: CTA e ênfase |
 | `--color-accent-on-dark` | #9a9d7f | acento sobre escuro |
 | `--color-warm` | #dcbea7 | calor em imagem e brilho, nunca em botão |
