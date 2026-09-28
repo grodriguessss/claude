@@ -43,6 +43,23 @@
 
   /* ---------- quebra de texto para animação ---------- */
   const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* ---------- smooth scroll: só com mouse, nunca no toque nem com reduced-motion ---------- */
+  if (!reduce && window.Lenis && window.matchMedia("(pointer: fine)").matches) {
+    const lenis = new window.Lenis({ lerp: 0.1, wheelMultiplier: 1, smoothWheel: true });
+    const loop = (t) => { lenis.raf(t); requestAnimationFrame(loop); };
+    requestAnimationFrame(loop);
+    document.querySelectorAll('a[href^="#"]').forEach((a) => {
+      const id = a.getAttribute("href");
+      if (id.length < 2) return;
+      a.addEventListener("click", (e) => {
+        const target = document.querySelector(id);
+        if (!target) return;
+        e.preventDefault();
+        lenis.scrollTo(target, { offset: -88, duration: 1.4 });
+      });
+    });
+  }
   const splitWords = (el, cls = "w") => {
     let i = 0;
     const walk = (node) => {

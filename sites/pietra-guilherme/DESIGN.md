@@ -79,16 +79,20 @@ Azul clínico. Depoimento inventado. Número de vaidade sem fonte. Vídeo de pro
 - Revelação de foto recorta a imagem, nunca a moldura: moldura recortada não dispara o IntersectionObserver.
 - Tudo desliga com prefers-reduced-motion. JavaScript puro, sem biblioteca.
 
-## Fotos reais (Instagram, via Figma)
+## Fotos reais (via Figma, página "DR GUILHERME E PIETRA")
 
 | Arquivo | Onde | Tratamento |
 |---|---|---|
-| casal.webp | hero | texto do post e seta do carrossel removidos por inpaint |
-| jaleco.webp | Nós | texto do topo e nomes do rodapé removidos, pontos do carrossel cortados |
+| hero-fundo.webp + hero-recorte.webp | hero | composição do Frame 1: foto dentro do arco e recorte sem fundo por cima, as cabeças vazam da moldura. Posições tiradas do Figma (left 1.527%, top -7.079%, width 95.38%); encaixe medido com diferença média de 0.68/255 |
+| jardim.webp | Nós | monograma PM/GM removido por inpaint em duas passadas |
 | cirurgia.webp | tratamento Implantes | recorte da metade de cima, azul clínico dessaturado e aquecido |
-| espelho.webp | Como funciona | recorte da metade de cima |
+| bastidores.webp | Como funciona | grade 3x3 de bastidores, cantos arredondados sem arco; seta e pontos do carrossel removidos |
 
-São capturas de tela: resolução baixa (até 1116px). Pedir os arquivos originais antes de publicar de verdade.
+Resto de rótulo "...RME" removido da foto de fundo e do recorte. A grade é montagem de prints: pedir originais para uma versão final.
+
+## Smooth scroll
+
+Lenis 1.1.20 via jsDelivr, lerp 0.1, só com ponteiro fino (mouse). Desligado no toque e com prefers-reduced-motion. Links de âncora usam lenis.scrollTo com offset de -88px (altura da nav).
 
 ## Créditos de imagem (Unsplash, licença livre)
 
